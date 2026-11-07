@@ -477,8 +477,8 @@ function saveMastery(wid) {
   saveMeta();
 }
 
-const MAX_RUN_LEVEL = 100;
-function xpFor(level) { return Math.floor(10 + level * 6.5 + level * level * 0.35); }
+const MAX_RUN_LEVEL = 50;
+function xpFor(level) { return Math.floor(12 + level * 8 + level * level * 0.4); }
 
 function sanitizeBest(b) {
   if (b && typeof b === 'object' && typeof b.time === 'number' && !isNaN(b.time) && b.time > 0) {
@@ -564,8 +564,10 @@ const MILESTONES = [
   { id: 'kills_250', check: g => g.kills >= 250, label: 'MASSACRE! 🔥', col: '#ff4d6d' },
   { id: 'first_boss', check: g => g.bossKills >= 1, label: 'BOSS SLAYER ⚔', col: '#ffd700' },
   { id: 'level_10', check: g => g.level >= 10, label: 'LEVEL 10 ⭐', col: '#6ee7ff' },
-  { id: 'level_20', check: g => g.level >= 20, label: 'LEVEL 20 ⭐⭐', col: '#c084fc' },
+  { id: 'level_25', check: g => g.level >= 25, label: 'LEVEL 25 🌟', col: '#c084fc' },
   { id: 'coins_100', check: g => (g.coinsEarned || 0) >= 100, label: 'LOADED 🪙 100', col: '#ffd700' },
   { id: 'combo_15', check: g => g.maxCombo >= 15, label: 'CHAIN LORD ⚡', col: '#a78bfa' },
-  { id: 'survive_3min', check: g => g.t >= 180, label: '3 MINUTES SURVIVED ⏱', col: '#7bffb2' }
+  { id: 'survive_5min', check: g => g.t >= 300, label: '5 MINUTES SURVIVED ⏱', col: '#7bffb2' },
+  { id: 'survive_10min', check: g => g.t >= 600, label: '10 MINUTES SURVIVED ⏱', col: '#38bdf8' },
+  { id: 'survive_20min', check: g => g.t >= 1200, label: '20 MIN SURVIVOR APEX 🏆', col: '#ffd700' }
 ];

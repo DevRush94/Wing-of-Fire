@@ -5,7 +5,7 @@
 function spawnEnemy(type, ox, oy) {
   const p = G.player;
   const d = DIFF[G.diff] || DIFF.easy;
-  const scale = (1 + G.t * 0.012) * d.hp;
+  const scale = (1 + G.t * 0.0035) * d.hp;
   const spdScale = d.spd;
   const dmgScale = d.dmg;
 
@@ -64,7 +64,7 @@ function spawnEnemy(type, ox, oy) {
   else if (type === 'chr_warp') base = { hp: 40 * scale, speed: 45 * S * spdScale, r: 16 * S, dmg: 18 * dmgScale, xp: 4, col: '#f59e0b', shape: 'star' };
   else if (type === 'chr_rewind') base = { hp: 50 * scale, speed: 50 * S * spdScale, r: 15 * S, dmg: 12 * dmgScale, xp: 4, col: '#d97706', shape: 'circle' };
   else if (type === 'chr_decay') base = { hp: 60 * scale, speed: 32 * S * spdScale, r: 18 * S, dmg: 22 * dmgScale, xp: 5, col: '#b45309', shape: 'diamond' };
-  else base = { hp: (1150 + G.t * 22) * scale, speed: 28 * S * spdScale, r: 46 * S, dmg: 28 * dmgScale, xp: 48, col: '#ff6600', shape: 'boss' };
+  else base = { hp: (950 + G.t * 9) * scale, speed: 30 * S * spdScale, r: 46 * S, dmg: 28 * dmgScale, xp: 75, col: '#ff6600', shape: 'boss' };
 
   const boss = type === 'boss';
   const elite = !boss && G.t > 40 && Math.random() < Math.min(0.16, 0.05 + G.t * 0.00025);
@@ -154,6 +154,12 @@ function killEnemy(e, idx) {
     burst(e.x, e.y, 60, '#ff4d6d', 360 * S, 1.2);
     boomBass();
     haptic([80, 50, 120]);
+
+    // Defeating the 5th Titan (or surviving 20 minutes) achieves Campaign Victory!
+    if (G.bossKills >= 5 || G.t >= 1200) {
+      triggerVictory();
+      return;
+    }
   } else if (e.elite) {
     G.shake = Math.min(10 * S, G.shake + 4 * S);
     addRing(e.x, e.y, 70 * S, '#ffd166', 0.4);

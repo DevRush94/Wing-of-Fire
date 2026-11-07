@@ -7,9 +7,14 @@ function update(dt, now) {
     G.t += dt;
     updatePlayer(dt);
 
-    if (G.t >= G.nextBoss) {
-      G.nextBoss += Math.max(50, 85 - G.bossKills * 5);
+    if (G.t >= G.nextBoss && G.bossKills < 5) {
+      G.nextBoss += Math.max(180, 225 - G.bossKills * 10);
       spawnEnemy('boss');
+    }
+
+    // 20-Minute Survival Apex Victory (1200s)
+    if (G.t >= 1200 && !G.enemies.some(e => e.boss)) {
+      triggerVictory();
     }
 
     updateSpawn(dt);

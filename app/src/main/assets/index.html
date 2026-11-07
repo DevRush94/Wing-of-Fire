@@ -1319,8 +1319,8 @@ function saveMastery(wid) {
   saveMeta();
 }
 
-const MAX_RUN_LEVEL = 100;
-function xpFor(level) { return Math.floor(10 + level * 6.5 + level * level * 0.35); }
+const MAX_RUN_LEVEL = 50;
+function xpFor(level) { return Math.floor(12 + level * 8 + level * level * 0.4); }
 
 function sanitizeBest(b) {
   if (b && typeof b === 'object' && typeof b.time === 'number' && !isNaN(b.time) && b.time > 0) {
@@ -1406,10 +1406,12 @@ const MILESTONES = [
   { id: 'kills_250', check: g => g.kills >= 250, label: 'MASSACRE! 🔥', col: '#ff4d6d' },
   { id: 'first_boss', check: g => g.bossKills >= 1, label: 'BOSS SLAYER ⚔', col: '#ffd700' },
   { id: 'level_10', check: g => g.level >= 10, label: 'LEVEL 10 ⭐', col: '#6ee7ff' },
-  { id: 'level_20', check: g => g.level >= 20, label: 'LEVEL 20 ⭐⭐', col: '#c084fc' },
+  { id: 'level_25', check: g => g.level >= 25, label: 'LEVEL 25 🌟', col: '#c084fc' },
   { id: 'coins_100', check: g => (g.coinsEarned || 0) >= 100, label: 'LOADED 🪙 100', col: '#ffd700' },
   { id: 'combo_15', check: g => g.maxCombo >= 15, label: 'CHAIN LORD ⚡', col: '#a78bfa' },
-  { id: 'survive_3min', check: g => g.t >= 180, label: '3 MINUTES SURVIVED ⏱', col: '#7bffb2' }
+  { id: 'survive_5min', check: g => g.t >= 300, label: '5 MINUTES SURVIVED ⏱', col: '#7bffb2' },
+  { id: 'survive_10min', check: g => g.t >= 600, label: '10 MINUTES SURVIVED ⏱', col: '#38bdf8' },
+  { id: 'survive_20min', check: g => g.t >= 1200, label: '20 MIN SURVIVOR APEX 🏆', col: '#ffd700' }
 ];
 
 
@@ -1436,7 +1438,7 @@ function newGame() {
     echoBuffer: [], echoIdx: 0,
     pows: [], ebullets: [], slowT: 0, slowStacks: 0, toast: null,
     hitFlash: 0, powerFlash: 0, powerPity: 0,
-    spawnT: 0.4, nextBoss: 85, shake: 0,
+    spawnT: 0.4, nextBoss: 150, shake: 0,
     cards: [], cardRects: [], up: {}, treeChoice: null,
     bonusPick: false, bonusPickCost: 0, bonusPickDone: false, afterTree: 'resume',
     player: {
@@ -3123,7 +3125,7 @@ function updateSpawn(dt) {
 function spawnEnemy(type, ox, oy) {
   const p = G.player;
   const d = DIFF[G.diff] || DIFF.easy;
-  const scale = (1 + G.t * 0.012) * d.hp;
+  const scale = (1 + G.t * 0.0035) * d.hp;
   const spdScale = d.spd;
   const dmgScale = d.dmg;
 
@@ -3182,7 +3184,7 @@ function spawnEnemy(type, ox, oy) {
   else if (type === 'chr_warp') base = { hp: 40 * scale, speed: 45 * S * spdScale, r: 16 * S, dmg: 18 * dmgScale, xp: 4, col: '#f59e0b', shape: 'star' };
   else if (type === 'chr_rewind') base = { hp: 50 * scale, speed: 50 * S * spdScale, r: 15 * S, dmg: 12 * dmgScale, xp: 4, col: '#d97706', shape: 'circle' };
   else if (type === 'chr_decay') base = { hp: 60 * scale, speed: 32 * S * spdScale, r: 18 * S, dmg: 22 * dmgScale, xp: 5, col: '#b45309', shape: 'diamond' };
-  else base = { hp: (1150 + G.t * 22) * scale, speed: 28 * S * spdScale, r: 46 * S, dmg: 28 * dmgScale, xp: 48, col: '#ff6600', shape: 'boss' };
+  else base = { hp: (950 + G.t * 9) * scale, speed: 30 * S * spdScale, r: 46 * S, dmg: 28 * dmgScale, xp: 75, col: '#ff6600', shape: 'boss' };
 
   const boss = type === 'boss';
   const elite = !boss && G.t > 40 && Math.random() < Math.min(0.16, 0.05 + G.t * 0.00025);
@@ -3272,6 +3274,12 @@ function killEnemy(e, idx) {
     burst(e.x, e.y, 60, '#ff4d6d', 360 * S, 1.2);
     boomBass();
     haptic([80, 50, 120]);
+
+    // Defeating the 5th Titan (or surviving 20 minutes) achieves Campaign Victory!
+    if (G.bossKills >= 5 || G.t >= 1200) {
+      triggerVictory();
+      return;
+    }
   } else if (e.elite) {
     G.shake = Math.min(10 * S, G.shake + 4 * S);
     addRing(e.x, e.y, 70 * S, '#ffd166', 0.4);
@@ -6621,7 +6629,12 @@ function drawVictory(now) {
   ctx.fillText('CAMPAIGN CONQUERED! \uD83C\uDFC6', cx, H * 0.22);
 
   const envCfg = (G && ENVIRONMENTS[G.env]) || ENVIRONMENTS.nebula;
-  txt(envCfg.name + ' PURGED · LEVEL 100 REACHED', cx, H * 0.29, 12 * S, '#7bffb2', 'center', 800);
+  const winSub = G.bossKills >= 5
+    ? (envCfg.name + ' PURGED · 5 APEX TITANS FELLED')
+    : (G.level >= MAX_RUN_LEVEL
+      ? (envCfg.name + ' PURGED · LEVEL ' + MAX_RUN_LEVEL + ' REACHED')
+      : (envCfg.name + ' PURGED · 20 MIN SURVIVED'));
+  txt(winSub, cx, H * 0.29, 12 * S, '#7bffb2', 'center', 800);
   txt('TIME  ' + fmt(G.t) + '   ·   ' + (DIFF[G.diff].name), cx, H * 0.36, 15 * S, '#fff', 'center', 700);
   txt(G.kills + ' KILLS   ·   ' + G.bossKills + ' TITANS FELLED   ·   +' + G.coinsEarned + ' \uD83E\uDE99 BANKED', cx, H * 0.42, 11 * S, '#ffd166', 'center', 700);
 
@@ -6972,9 +6985,14 @@ function update(dt, now) {
     G.t += dt;
     updatePlayer(dt);
 
-    if (G.t >= G.nextBoss) {
-      G.nextBoss += Math.max(50, 85 - G.bossKills * 5);
+    if (G.t >= G.nextBoss && G.bossKills < 5) {
+      G.nextBoss += Math.max(180, 225 - G.bossKills * 10);
       spawnEnemy('boss');
+    }
+
+    // 20-Minute Survival Apex Victory (1200s)
+    if (G.t >= 1200 && !G.enemies.some(e => e.boss)) {
+      triggerVictory();
     }
 
     updateSpawn(dt);

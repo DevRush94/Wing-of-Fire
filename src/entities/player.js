@@ -20,7 +20,7 @@ function newGame() {
     echoBuffer: [], echoIdx: 0,
     pows: [], ebullets: [], slowT: 0, slowStacks: 0, toast: null,
     hitFlash: 0, powerFlash: 0, powerPity: 0,
-    spawnT: 0.4, nextBoss: 85, shake: 0,
+    spawnT: 0.4, nextBoss: 150, shake: 0,
     cards: [], cardRects: [], up: {}, treeChoice: null,
     bonusPick: false, bonusPickCost: 0, bonusPickDone: false, afterTree: 'resume',
     player: {

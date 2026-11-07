@@ -551,7 +551,12 @@ function drawVictory(now) {
   ctx.fillText('CAMPAIGN CONQUERED! \uD83C\uDFC6', cx, H * 0.22);
 
   const envCfg = (G && ENVIRONMENTS[G.env]) || ENVIRONMENTS.nebula;
-  txt(envCfg.name + ' PURGED · LEVEL 100 REACHED', cx, H * 0.29, 12 * S, '#7bffb2', 'center', 800);
+  const winSub = G.bossKills >= 5
+    ? (envCfg.name + ' PURGED · 5 APEX TITANS FELLED')
+    : (G.level >= MAX_RUN_LEVEL
+      ? (envCfg.name + ' PURGED · LEVEL ' + MAX_RUN_LEVEL + ' REACHED')
+      : (envCfg.name + ' PURGED · 20 MIN SURVIVED'));
+  txt(winSub, cx, H * 0.29, 12 * S, '#7bffb2', 'center', 800);
   txt('TIME  ' + fmt(G.t) + '   ·   ' + (DIFF[G.diff].name), cx, H * 0.36, 15 * S, '#fff', 'center', 700);
   txt(G.kills + ' KILLS   ·   ' + G.bossKills + ' TITANS FELLED   ·   +' + G.coinsEarned + ' \uD83E\uDE99 BANKED', cx, H * 0.42, 11 * S, '#ffd166', 'center', 700);
 
