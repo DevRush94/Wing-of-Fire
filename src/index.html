@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<meta name="theme-color" content="#07060d">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='flame' x1='0%25' y1='100%25' x2='100%25' y2='0%25'%3E%3Cstop offset='0%25' stop-color='%23ff3300'/%3E%3Cstop offset='50%25' stop-color='%23ff9900'/%3E%3Cstop offset='100%25' stop-color='%23ffee55'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath fill='url(%23flame)' d='M32 2 C36 14 46 18 50 28 C55 39 48 56 32 62 C16 56 9 39 14 28 C18 18 28 14 32 2 Z'/%3E%3Cpath fill='%23ffffff' opacity='0.85' d='M32 24 C34 30 38 32 40 37 C42 42 39 48 32 52 C25 48 22 42 24 37 C26 32 30 30 32 24 Z'/%3E%3C/svg%3E">
+<link rel="shortcut icon" href="favicon.ico">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<canvas id="c"></canvas>
+
+<div id="authModal">
+  <div id="authCard">
+    <h2>WINGS OF FIRE</h2>
+    <p class="sub">Account Login & Progress Cloud</p>
+    <form id="authForm" autocomplete="on" onsubmit="event.preventDefault(); return false;">
+      <div class="auth-input-group">
+        <label for="authUsername">Username</label>
+        <input type="text" id="authUsername" name="username" placeholder="Enter username" autocomplete="username" autocapitalize="none">
+      </div>
+      <div class="auth-input-group">
+        <label for="authPassword">Password</label>
+        <input type="password" id="authPassword" name="password" placeholder="Enter password" autocomplete="current-password">
+      </div>
+      <div class="auth-btns">
+        <button type="submit" class="btn-auth-primary" id="btnLogin">LOGIN</button>
+        <button type="button" class="btn-auth-sec" id="btnRegister">REGISTER</button>
+      </div>
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-top:12px;">
+        <button type="button" class="btn-guest" id="btnGuest" style="margin:0;">Play as Guest</button>
+        <button type="button" class="btn-guest" id="btnLogout" style="margin:0; color:#ff6b6b; display:none;">Logout / Switch</button>
+      </div>
+    </form>
+    <div id="authMsg"></div>
+  </div>
+</div>
+
+  <!-- Modular JS Script Inclusions -->
+  <script src="core/constants.js"></script>
+  <script src="core/audio.js"></script>
+  <script src="core/storage.js"></script>
+  <script src="entities/player.js"></script>
+  <script src="entities/weapons.js"></script>
+  <script src="entities/enemies.js"></script>
+  <script src="world/world.js"></script>
+  <script src="render/vfx.js"></script>
+  <script src="render/renderer.js"></script>
+  <script src="ui/hud.js"></script>
+  <script src="ui/screens.js"></script>
+  <script src="input/input.js"></script>
+  <script src="main.js"></script>
+</body>
+</html>

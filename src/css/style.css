@@ -1,0 +1,44 @@
+html,body{margin:0;padding:0;width:100%;height:100%;overflow:hidden;background:#07060d;touch-action:none;
+    -webkit-user-select:none;user-select:none;-webkit-tap-highlight-color:transparent;font-family:system-ui,-apple-system,sans-serif}
+  canvas{display:block;width:100%;height:100%}
+  #authModal {
+    position: fixed; inset: 0; display: none; align-items: center; justify-content: center;
+    background: rgba(4, 3, 8, 0.86); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+    z-index: 999; touch-action: auto;
+  }
+  #authCard {
+    width: 90%; max-width: 350px; background: rgba(18, 14, 32, 0.95);
+    border: 1px solid rgba(255, 120, 50, 0.4); border-radius: 16px;
+    box-shadow: 0 16px 48px rgba(0,0,0,0.85); padding: 24px 20px; box-sizing: border-box;
+    color: #fff; text-align: center;
+  }
+  #authCard h2 {
+    margin: 0 0 4px; font-size: 22px; font-weight: 800;
+    background: linear-gradient(135deg, #ff8a3d, #ffd166);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; letter-spacing: 1px;
+  }
+  #authCard p.sub { margin: 0 0 16px; font-size: 11.5px; color: #9ca3af; }
+  .auth-input-group { margin-bottom: 12px; text-align: left; }
+  .auth-input-group label { display: block; font-size: 11px; font-weight: 700; color: #ffb347; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.5px; }
+  .auth-input-group input {
+    width: 100%; box-sizing: border-box; background: rgba(8, 6, 16, 0.9);
+    border: 1px solid rgba(255, 255, 255, 0.18); border-radius: 8px;
+    padding: 10px 12px; font-size: 14px; color: #fff; outline: none; transition: border-color 0.2s;
+  }
+  .auth-input-group input:focus { border-color: #ff7a2f; }
+  .auth-btns { display: flex; gap: 8px; margin-top: 14px; }
+  .btn-auth-primary {
+    flex: 1; background: linear-gradient(135deg, #ff6b35, #ff3d6e); color: #fff;
+    border: none; border-radius: 8px; padding: 11px 0; font-size: 13.5px; font-weight: 700;
+    cursor: pointer; box-shadow: 0 4px 14px rgba(255, 61, 110, 0.4);
+  }
+  .btn-auth-sec {
+    flex: 1; background: rgba(255, 255, 255, 0.08); color: #ffd166;
+    border: 1px solid rgba(255, 209, 102, 0.35); border-radius: 8px; padding: 11px 0;
+    font-size: 13.5px; font-weight: 700; cursor: pointer;
+  }
+  .btn-guest {
+    display: inline-block; margin-top: 14px; background: transparent; border: none;
+    color: #9ca3af; font-size: 12px; text-decoration: underline; cursor: pointer; padding: 4px 8px;
+  }
+  #authMsg { margin-top: 12px; font-size: 12px; min-height: 16px; font-weight: 600; color: #ffd166; }
