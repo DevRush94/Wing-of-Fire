@@ -177,9 +177,10 @@ The generated APK will be located at `app/build/outputs/apk/debug/app-debug.apk`
 
 ---
 
-## 📜 License
+## 📜 License & Changelog
 
-This project is licensed under the **MIT License** — see the [LICENSE](LICENSE) file for details.
+- **License:** Licensed under the **MIT License** — see the [LICENSE](LICENSE) file for details.
+- **Release History:** For full architectural updates, balancing passes, and release history, see [CHANGELOG.md](CHANGELOG.md).
 
 ---
 
